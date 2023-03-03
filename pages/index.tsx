@@ -11,6 +11,7 @@ import {
   Heading,
   IconButton,
   Input,
+  Link,
   Text,
   Textarea,
 } from "@chakra-ui/react";
@@ -72,9 +73,15 @@ export default function Home() {
           fontSize="sm"
           overflowY="auto"
         >
-          <Heading mb={8} mt={4} color="white">
+          <Heading mb={4} mt={4} color="white">
             Ordinals Metadata Composer
           </Heading>
+
+          <Box color="white" mb={8}>
+            <Link href="https://twitter.com/poyo_eth" target="_blank">
+              by Poyo
+            </Link>
+          </Box>
 
           <Heading color="white" textTransform="uppercase" size="sm" mb={4}>
             Meta
