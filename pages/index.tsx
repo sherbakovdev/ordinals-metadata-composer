@@ -9,11 +9,13 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  IconButton,
   Input,
   Text,
   Textarea,
 } from "@chakra-ui/react";
 
+import { CloseIcon } from "@chakra-ui/icons";
 import Head from "next/head";
 import { State } from "@/types";
 import { useInscription } from "@/hooks/useInscription";
@@ -237,7 +239,7 @@ export default function Home() {
                         (attr, attrIndex) => (
                           <Flex key={attrIndex}>
                             <Flex gap={4} w="full" pb="3">
-                              <FormControl>
+                              <FormControl flex="1">
                                 <FormLabel color="gray.300" fontSize="sm">
                                   Trait Type
                                 </FormLabel>
@@ -259,28 +261,41 @@ export default function Home() {
                                   }
                                 />
                               </FormControl>
-                              <FormControl>
-                                <FormLabel color="gray.300" fontSize="sm">
-                                  Value
-                                </FormLabel>
-                                <Input
-                                  color="white"
-                                  type="text"
-                                  value={
-                                    state.inscriptions[index].attributes[
-                                      attrIndex
-                                    ].value
-                                  }
-                                  onChange={(e) =>
-                                    inscription.setAttribute(
+                              <Flex flex="1" gap={4} alignItems="flex-end">
+                                <FormControl>
+                                  <FormLabel color="gray.300" fontSize="sm">
+                                    Value
+                                  </FormLabel>
+                                  <Input
+                                    color="white"
+                                    type="text"
+                                    value={
+                                      state.inscriptions[index].attributes[
+                                        attrIndex
+                                      ].value
+                                    }
+                                    onChange={(e) =>
+                                      inscription.setAttribute(
+                                        index,
+                                        attrIndex,
+                                        "value",
+                                        e.target.value
+                                      )
+                                    }
+                                  />
+                                </FormControl>
+                                <IconButton
+                                  color="red"
+                                  aria-label="Delete"
+                                  icon={<CloseIcon />}
+                                  onClick={() =>
+                                    inscription.removeAttribute(
                                       index,
-                                      attrIndex,
-                                      "value",
-                                      e.target.value
+                                      attrIndex
                                     )
                                   }
                                 />
-                              </FormControl>
+                              </Flex>
                             </Flex>
                           </Flex>
                         )

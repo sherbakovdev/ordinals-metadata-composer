@@ -67,6 +67,13 @@ export const useInscription = (
     setMetadata(newMetadata);
   };
 
+  const removeAttribute = (index: number, attributeIndex: number) => {
+    const newMetadata = { ...metadata };
+    const inscription = newMetadata.inscriptions[index];
+    inscription.attributes.splice(attributeIndex, 1);
+    setMetadata(newMetadata);
+  };
+
   return {
     add,
     set,
@@ -75,5 +82,6 @@ export const useInscription = (
     download,
     addAttribute,
     setAttribute,
+    removeAttribute,
   };
 };
