@@ -51,6 +51,31 @@ export default function Home() {
     setDomLoaded(true);
   }, []);
 
+  // Instead of introducing a new version of the schema for localStorate,
+  // we just fix the nesting of the attributes in the inscriptions and re-save the localStorate
+  React.useEffect(() => {
+    if (state.inscriptions) {
+      const inscriptionsWithCorrectNesting = state.inscriptions.map(
+        (inscription) => {
+          const inscriptionCopy = { ...inscription };
+
+          if (inscriptionCopy.attributes) {
+            inscriptionCopy.meta.attributes = inscriptionCopy.attributes;
+            delete inscriptionCopy.attributes;
+          }
+
+          return inscriptionCopy;
+        }
+      );
+
+      setState({
+        ...state,
+        inscriptions: inscriptionsWithCorrectNesting,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (!domLoaded) {
     return null;
   }
@@ -231,18 +256,19 @@ export default function Home() {
                         onChange={(e) =>
                           inscription.set(index, "meta", {
                             name: e.target.value,
+                            attributes: insc.meta.attributes,
                           })
                         }
                       />
                     </FormControl>
                   </Flex>
 
-                  {state.inscriptions[index].attributes.length ? (
+                  {state.inscriptions[index].meta.attributes?.length ? (
                     <>
                       <Text color="white" fontWeight="bold" mt={4} mb={2}>
                         Attributes:
                       </Text>
-                      {state.inscriptions[index].attributes.map(
+                      {state.inscriptions[index].meta.attributes.map(
                         (attr, attrIndex) => (
                           <Flex key={attrIndex}>
                             <Flex gap={4} w="full" pb="3">
@@ -254,7 +280,7 @@ export default function Home() {
                                   color="white"
                                   type="text"
                                   value={
-                                    state.inscriptions[index].attributes[
+                                    state.inscriptions[index].meta.attributes[
                                       attrIndex
                                     ].trait_type
                                   }
@@ -277,7 +303,7 @@ export default function Home() {
                                     color="white"
                                     type="text"
                                     value={
-                                      state.inscriptions[index].attributes[
+                                      state.inscriptions[index].meta.attributes[
                                         attrIndex
                                       ].value
                                     }

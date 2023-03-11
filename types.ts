@@ -7,8 +7,11 @@ export type Inscription = {
   id: string;
   meta: {
     name: string;
+    attributes: Attribute[];
   };
-  attributes: Attribute[];
+
+  // Depricated. Will be removed in future versions.
+  attributes?: Attribute[];
 };
 
 export type State = {

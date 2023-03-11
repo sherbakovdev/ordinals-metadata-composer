@@ -4,8 +4,8 @@ const inscription: Inscription = {
   id: "",
   meta: {
     name: "",
+    attributes: [],
   },
-  attributes: [],
 };
 
 export const useInscription = (
@@ -50,19 +50,19 @@ export const useInscription = (
   const addAttribute = (index: number) => {
     const newMetadata = { ...metadata };
     const inscription = newMetadata.inscriptions[index];
-    inscription.attributes.push({ trait_type: "", value: "" });
+    inscription.meta.attributes.push({ trait_type: "", value: "" });
     setMetadata(newMetadata);
   };
 
   const setAttribute = (
     index: number,
     attributeIndex: number,
-    key: keyof Inscription["attributes"][0],
+    key: keyof Inscription["meta"]["attributes"][0],
     value: any
   ) => {
     const newMetadata = { ...metadata };
     const inscription = newMetadata.inscriptions[index];
-    const attribute = inscription.attributes[attributeIndex];
+    const attribute = inscription.meta.attributes[attributeIndex];
     attribute[key] = value;
     setMetadata(newMetadata);
   };
@@ -70,7 +70,7 @@ export const useInscription = (
   const removeAttribute = (index: number, attributeIndex: number) => {
     const newMetadata = { ...metadata };
     const inscription = newMetadata.inscriptions[index];
-    inscription.attributes.splice(attributeIndex, 1);
+    inscription.meta.attributes.splice(attributeIndex, 1);
     setMetadata(newMetadata);
   };
 
